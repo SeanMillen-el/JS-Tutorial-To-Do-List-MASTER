@@ -11,6 +11,15 @@ const LINE_THROUGH = "lineThrough";
 //Variables
 let LIST = []
 ,id = 0;
+
+//Get item from local storage
+let data = localStorage.getItem("TODO");
+
+//Check if data is not empty
+
+//Add item to local storage
+localStorage.setItem("TODO", JSON.stringify(LIST));
+
 // Show today's date
 const options = { weekday: "long", month: "short", day: "numeric" };
 const today = new Date();
@@ -41,9 +50,14 @@ document.addEventListener("keyup", function(even) {
         id: id,
         done: false,
         trash: false
+
       });
+//Add item to local storage
+localStorage.setItem("TODO", JSON.stringify(LIST));
+
+
       id++;
-      
+
     }
     input.value = "";
   }
@@ -58,7 +72,6 @@ function completeToDo(element){
 //Remove the to-do
 function removeToDo(element){
     element.parentNode.parentNode.removeChild(element.parentNode);
-
     LIST[element.id].trash = true;
 }
 //Target the items created dynamically
@@ -68,7 +81,9 @@ list.addEventListener("click", function(event){
 
     if(elementJob == "complete"){
         completeToDo(element);
-    }else if(elementJob == "remove"){
+    }else if(elementJob == "delete"){
         removeToDo(element);
     }
+    //Add item to local storage
+localStorage.setItem("TODO", JSON.stringify(LIST));
 })
