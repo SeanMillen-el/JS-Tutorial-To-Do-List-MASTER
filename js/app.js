@@ -8,18 +8,26 @@ const input = document.getElementById("input");
 const CHECK = "fa-check-circle";
 const UNCHECK = "fa-circle-thin";
 const LINE_THROUGH = "lineThrough";
+
 //Variables
-let LIST = []
-,id = 0;
+let LIST, id;
 
 //Get item from local storage
 let data = localStorage.getItem("TODO");
 
 //Check if data is not empty
+if(data){
+    LIST = JSON.parse(data);
+    id = LIST.length; //set the id to the last one in the list
+    loadList(LIST); //load the list to the user interface
+}else{ 
+    //if data is not empty
+    LIST = [];
+    id = 0;
+}
 
 //Add item to local storage
 localStorage.setItem("TODO", JSON.stringify(LIST));
-
 // Show today's date
 const options = { weekday: "long", month: "short", day: "numeric" };
 const today = new Date();
@@ -50,14 +58,11 @@ document.addEventListener("keyup", function(even) {
         id: id,
         done: false,
         trash: false
-
       });
 //Add item to local storage
 localStorage.setItem("TODO", JSON.stringify(LIST));
-
-
       id++;
-
+      
     }
     input.value = "";
   }
@@ -78,7 +83,6 @@ function removeToDo(element){
 list.addEventListener("click", function(event){
     const element = event.target; //returns the clicked element inside list
     const elementJob = element.attributes.job.value //complete or delete
-
     if(elementJob == "complete"){
         completeToDo(element);
     }else if(elementJob == "delete"){
