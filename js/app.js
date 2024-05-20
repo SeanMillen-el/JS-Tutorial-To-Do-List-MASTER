@@ -1,20 +1,16 @@
 // CODE EXPLAINED channel
-
 // Select the elements
 const clear = document.querySelector(".clear");
 const dateElement = document.getElementById("date");
 const list = document.getElementById("list");
 const input = document.getElementById("input");
-
 // Classes names
 const CHECK = "fa-check-circle";
 const UNCHECK = "fa-circle-thin";
 const LINE_THROUGH = "lineThrough";
-
 //Variables
 let LIST = []
 ,id = 0;
-
 // Show today's date
 const options = { weekday: "long", month: "short", day: "numeric" };
 const today = new Date();
@@ -45,15 +41,13 @@ document.addEventListener("keyup", function(even) {
         id: id,
         done: false,
         trash: false
-
       });
       id++;
-
+      
     }
     input.value = "";
   }
 });
-
 //Complete the to-do function
 function completeToDo(element){
     element.classList.toggle(CHECK);
@@ -61,4 +55,10 @@ function completeToDo(element){
     element.parentNode.querySelector(".text").classList.toggle(LINE_THROUGH)
 
     LIST[element.id].done = LIST[element.id].done ? false:true;
+}
+//Remove the to-do
+function removeToDo(element){
+    element.parentNode.parentNode.removeChild(element.parentNode);
+
+    LIST[element.id].trash = true;
 }
